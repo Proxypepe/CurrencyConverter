@@ -10,4 +10,6 @@ interface CurrencyApi {
     @GET("pair/{to}/{from}/{amount}")
     fun getConversion(@Path("to") to: String, @Path("from") from: String, @Path("amount") amount: String) : Call<Currency>
 
+    @GET("pair/{first}/{second}")
+    fun getBaseConversion(@Path("first") first: String, @Path("second") second: String) : Call<Currency>
 }
