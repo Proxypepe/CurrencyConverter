@@ -39,16 +39,13 @@ class CurrencyViewModel(private val currencyRemoteRepository: CurrencyRemoteRepo
         loading.value = true
         currencyRemoteRepository?.getConversion(to, from, amount)?.enqueue(object : Callback<Currency>{
             override fun onResponse(call: Call<Currency>, response: Response<Currency>) {
-                Log.d("Ok", "All ok $to $from")
                 if(response.isSuccessful) {
                     val req = response.body()
                     req?.let {
-                        Log.d("Value", "$it")
                         conversionResult.value = it
                         loading.value = false
                         saveCurrency(to)
                         saveCurrency(from)
-                        Log.d("enaue", "$loading.value")
                     }
                     if (req == null) {
                         loading.value = false
@@ -57,20 +54,15 @@ class CurrencyViewModel(private val currencyRemoteRepository: CurrencyRemoteRepo
             }
 
             override fun onFailure(call: Call<Currency>, t: Throwable) {
-                Log.d("Error", "")
-
-                var res = 0F
+                var res: Float
                 localRepository?.getCurrencies(to, from)?.asLiveData()?.observe(context as MainActivity){
-                    Log.d("All ok with data", it.toString())
                     if (it.size == 2){
                         try {
                             if (it[0]?.name == to && it[0]?.price != 0f && it[1]?.price != 0f)
                             {
                                 res = calculate(amount.toFloat(), it[0]?.price!!, it[1]?.price!!)
-                                Log.d("first", "$res")
                             } else {
                                 res = calculate(amount.toFloat(), it[1]?.price!!, it[0]?.price!!)
-                                Log.d("second", "$res")
                             }
                             conversionResult.value = Currency(result="",
                                 documentation="", terms_of_use="", time_last_update_unix=0L, time_last_update_utc="",

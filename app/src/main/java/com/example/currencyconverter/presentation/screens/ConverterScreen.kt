@@ -56,10 +56,8 @@ fun ConverterScreen(navController: NavController, currencyViewModel: CurrencyVie
              ) {
                  Button(
                      onClick = {
-                         val localRes = currencyViewModel.getConversion(currencyViewModel.getCurrencyTo(),
+                         currencyViewModel.getConversion(currencyViewModel.getCurrencyTo(),
                              currencyViewModel.getCurrencyFrom(), valueFrom.value.text)
-                         Log.d("ValueTo", " Value ${currencyLiveData.value?.conversion_result} \n" +
-                                 "Value local $localRes")
                      }, colors = ButtonDefaults.textButtonColors(
                          backgroundColor = Color.White
                      )
