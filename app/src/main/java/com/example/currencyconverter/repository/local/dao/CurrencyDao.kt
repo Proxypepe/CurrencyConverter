@@ -14,9 +14,9 @@ interface CurrencyDao {
     fun getCurrency(name: String) : Flow<CurrencyDTO>
 
     @Insert
-    suspend fun insertCurrency(currencyDto: CurrencyDTO) : Flow<CurrencyDTO>
+    suspend fun insertCurrency(currencyDto: CurrencyDTO)
 
     @Update
-    suspend fun updateCurrency(currencyDto: CurrencyDTO) : Flow<CurrencyDTO>
+    suspend fun updateCurrency(currencyDto: CurrencyDTO)
 
 }

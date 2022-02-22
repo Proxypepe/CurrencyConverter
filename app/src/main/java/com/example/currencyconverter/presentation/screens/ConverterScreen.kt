@@ -124,6 +124,6 @@ fun Dropdown(currencyViewModel: CurrencyViewModel, pos: String) {
 @Composable
 fun ConverterScreenTest() {
     val navController = rememberNavController()
-    val viewModel = CurrencyViewModel(null)
+    val viewModel = CurrencyViewModel(null, null)
     ConverterScreen(navController, viewModel)
 }
