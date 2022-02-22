@@ -11,6 +11,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
@@ -24,7 +25,7 @@ import com.example.currencyconverter.domain.CurrencyViewModel
 @Composable
 fun ConverterScreen(navController: NavController, currencyViewModel: CurrencyViewModel) {
     val valueFrom   = remember { mutableStateOf(TextFieldValue()) }
-
+    currencyViewModel.context = LocalContext.current
     val currencyLiveData = currencyViewModel.getConversionResult().observeAsState()
 
     Box(
@@ -55,14 +56,15 @@ fun ConverterScreen(navController: NavController, currencyViewModel: CurrencyVie
              ) {
                  Button(
                      onClick = {
-                         currencyViewModel.getConversion(currencyViewModel.getCurrencyTo(),
+                         val localRes = currencyViewModel.getConversion(currencyViewModel.getCurrencyTo(),
                              currencyViewModel.getCurrencyFrom(), valueFrom.value.text)
-                         Log.d("ValueTo", " Value ${currencyLiveData.value?.conversion_result}")
+                         Log.d("ValueTo", " Value ${currencyLiveData.value?.conversion_result} \n" +
+                                 "Value local $localRes")
                      }, colors = ButtonDefaults.textButtonColors(
                          backgroundColor = Color.White
                      )
                  ) {
-                     Text("Hello")
+                     Text("Convert  ")
                      Log.d("Loading",  "${currencyViewModel.loading}")
                      LoadProgress(currencyViewModel.loading)
                  }

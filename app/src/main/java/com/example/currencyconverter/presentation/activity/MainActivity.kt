@@ -11,6 +11,7 @@ import com.example.currencyconverter.domain.CurrencyViewModel
 import com.example.currencyconverter.domain.CurrencyViewModelFactory
 import com.example.currencyconverter.presentation.screens.ConverterScreen
 import com.example.currencyconverter.ui.theme.CurrencyConverterTheme
+import java.security.AccessController.getContext
 
 class MainActivity : ComponentActivity() {
     private val currencyViewModel: CurrencyViewModel by viewModels {

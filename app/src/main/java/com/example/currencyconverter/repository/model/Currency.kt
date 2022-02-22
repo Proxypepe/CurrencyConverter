@@ -12,5 +12,5 @@ data class Currency(
     val base_code: String,
     val target_code: String,
     val conversion_rate: Float,
-    val conversion_result: Float
+    var conversion_result: Float
     )
