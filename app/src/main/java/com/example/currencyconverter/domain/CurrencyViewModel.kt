@@ -5,13 +5,15 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.currencyconverter.repository.local.CurrencyRepository
 import com.example.currencyconverter.repository.model.Currency
 import com.example.currencyconverter.repository.remote.CurrencyRemoteRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CurrencyViewModel(private val currencyRemoteRepository: CurrencyRemoteRepository?) : ViewModel() {
+class CurrencyViewModel(private val currencyRemoteRepository: CurrencyRemoteRepository?,
+                        private val localRepository: CurrencyRepository?) : ViewModel() {
 
     var loading = MutableLiveData(false)
 
@@ -62,11 +64,12 @@ class CurrencyViewModel(private val currencyRemoteRepository: CurrencyRemoteRepo
 }
 
 
-class CurrencyViewModelFactory(private val remoteRepository: CurrencyRemoteRepository) : ViewModelProvider.Factory {
+class CurrencyViewModelFactory(private val remoteRepository: CurrencyRemoteRepository,
+        private val localRepository: CurrencyRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(CurrencyViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return CurrencyViewModel(remoteRepository) as T
+            return CurrencyViewModel(remoteRepository, localRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

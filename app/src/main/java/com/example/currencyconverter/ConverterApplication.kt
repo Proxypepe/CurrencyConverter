@@ -1,6 +1,8 @@
 package com.example.currencyconverter
 
 import android.app.Application
+import com.example.currencyconverter.repository.local.CurrencyDatabase
+import com.example.currencyconverter.repository.local.CurrencyRepository
 import com.example.currencyconverter.repository.remote.CurrencyApi
 import com.example.currencyconverter.repository.remote.CurrencyRemoteRepository
 import com.example.currencyconverter.repository.remote.RetrofitFactory
@@ -12,5 +14,13 @@ class ConverterApplication : Application() {
     }
     val currencyRemoteRepository by lazy {
         CurrencyRemoteRepository(currencyApi)
+    }
+
+    private val database by lazy {
+        CurrencyDatabase.getDatabase(this)
+    }
+
+    val localRepository by lazy {
+        CurrencyRepository(database.currencyDao())
     }
 }
